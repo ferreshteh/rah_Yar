@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راه یار - همسفر هوشمند شما</title>
+
+
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JJC1KV5M88"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JJC1KV5M88');
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const schedulerBtn = document.querySelector('a[href="google-calender.html"]');
+        if (schedulerBtn) {
+          schedulerBtn.addEventListener('click', function() {
+            gtag('event', 'feature_click', { 'feature_name': 'برنامه‌ریز هوشمند جلسات' });
+          });
+        }
+
+        const routeBtn = document.querySelector('a[href="map.html"]');
+        if (routeBtn) {
+          routeBtn.addEventListener('click', function() {
+            gtag('event', 'feature_click', { 'feature_name': 'مسیریاب چندوجهی' });
+          });
+        }
+
+        const rewardsBtn = document.querySelector('a[href="farhang_sazy.html"]');
+        if (rewardsBtn) {
+          rewardsBtn.addEventListener('click', function() {
+            gtag('event', 'feature_click', { 'feature_name': 'سیستم پاداش سفر پایدار' });
+          });
+        }
+      });
+    </script>
+    <!-- End Google Analytics -->
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+        }
+        
+        .card-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-shine::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-bottom-color: #3b82f6;
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(0.95);
+                opacity: 1;
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .ticket-pattern {
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
+        }
+        
+        .stats-counter {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-gradient-to-r from-blue-600 to-green-500 rounded-xl p-2">
+                            <i class="fas fa-route text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-black text-gray-800">راه‌یار</h1>
+                            <p class="text-xs text-gray-500">همسفر هوشمند شما</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="#home" class="nav-link text-gray-700 hover:text-blue-600 font-medium">صفحه اصلی</a>
+                        <a href="#features" class="nav-link text-gray-700 hover:text-blue-600 font-medium">امکانات</a>
+                        <a href="#about" class="nav-link text-gray-700 hover:text-blue-600 font-medium">درباره ما</a>
+                        <a href="#contact" class="nav-link text-gray-700 hover:text-blue-600 font-medium">تماس</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:block">
+                        <div class="bg-gradient-to-r from-green-100 to-blue-100 rounded-full px-4 py-2">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-coins text-yellow-500"></i>
+                                <span class="font-bold text-gray-800 stats-counter" id="points-counter">1,247</span>
+                                <span class="text-gray-600">امتیاز</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-xl px-6 py-3 font-bold hover:shadow-lg transition">
+                        <i class="fas fa-user ml-2"></i>
+                        حساب کاربری
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 py-16 md:py-24">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="absolute -top-6 -right-6 w-32 h-32 bg-blue-100 rounded-full opacity-50"></div>
+                    <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-green-100 rounded-full opacity-50"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center bg-gradient-to-r from-blue-100 to-green-100 rounded-full px-4 py-2 mb-6">
+                            <span class="w-2 h-2 bg-green-500 rounded-full ml-2"></span>
+                            <span class="text-sm font-medium text-gray-700">نسخه ۲.۰ راه‌یار منتشر شد</span>
+                        </div>
+                        
+                        <h1 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
+                            سفر هوشمند، 
+                            <span class="gradient-text">زندگی آسان‌تر</span>
+                        </h1>
+                        
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                            راه‌یار یک پلتفرم جامع مدیریت سفر است که با ترکیب هوش مصنوعی و داده‌های لحظه‌ای، تجربه سفر شما را متحول می‌کند. از برنامه‌ریزی جلسات تا مسیریابی چندوجهی و کسب پاداش برای سفرهای پایدار.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#features" class="bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-xl px-8 py-4 font-bold hover:shadow-xl transition duration-300 flex items-center">
+                                <i class="fas fa-rocket ml-2"></i>
+                                شروع کنید
+                            </a>
+                            <a href="#video-demo" class="bg-white text-gray-700 border-2 border-gray-200 rounded-xl px-8 py-4 font-bold hover:border-blue-500 transition flex items-center">
+                                <i class="fas fa-play-circle ml-2 text-blue-600"></i>
+                                مشاهده ویدیو
+                            </a>
+                        </div>
+                        
+                        <div class="mt-12 grid grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="text-3xl font-black text-blue-600 stats-counter" data-count="25400">25,400</div>
+                                <div class="text-sm text-gray-500">کاربر فعال</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-black text-green-600 stats-counter" data-count="1285000">1,285,000</div>
+                                <div class="text-sm text-gray-500">سفر ثبت شده</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-black text-purple-600 stats-counter" data-count="124">124</div>
+                                <div class="text-sm text-gray-500">تن CO₂ صرفه‌جویی</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="relative floating">
+                        <div class="absolute -top-6 -right-6 w-64 h-64 bg-gradient-to-r from-blue-200 to-green-200 rounded-full opacity-30 blur-xl"></div>
+                        <div class="absolute -bottom-6 -left-6 w-56 h-56 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full opacity-30 blur-xl"></div>
+                        
+                        <div class="relative bg-white rounded-3xl shadow-2xl overflow-hidden">
+                            <!-- Mockup of the app dashboard -->
+                            <div class="bg-gradient-to-r from-blue-600 to-green-500 p-6 text-white">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-route text-2xl"></i>
+                                        <div>
+                                            <div class="font-bold text-lg">داشبورد راه‌یار</div>
+                                            <div class="text-sm opacity-90">تهران - وضعیت ترافیک: متوسط</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-2xl font-black">14:30</div>
+                                        <div class="text-xs opacity-90">امروز ۲۳ فروردین</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="bg-blue-500 text-white rounded-lg p-2">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold text-gray-800">جلسه تیم</div>
+                                                <div class="text-sm text-gray-600">16:30 - دفتر مرکزی</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <div class="text-blue-600 font-bold">زمان حرکت: 15:45</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-4 bg-green-50 rounded-xl">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="bg-green-500 text-white rounded-lg p-2">
+                                                <i class="fas fa-bus"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold text-gray-800">مسیر پیشنهادی</div>
+                                                <div class="text-sm text-gray-600">مترو + اتوبوس (۴۲ دقیقه)</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <div class="text-green-600 font-bold">+۳۵ امتیاز</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-4 bg-purple-50 rounded-xl">
+                                        <div class="flex items-center space-x-3">
+                                            <div class="bg-purple-500 text-white rounded-lg p-2">
+                                                <i class="fas fa-gift"></i>
+                                            </div>
+                                            <div>
+                                                <div class="font-bold text-gray-800">قرعه‌کشی این ماه</div>
+                                                <div class="text-sm text-gray-600">شارژ رایگان کارت</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-left">
+                                            <div class="text-purple-600 font-bold">۸ روز مانده</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-6 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border border-yellow-200">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-lightbulb text-yellow-500 text-xl"></i>
+                                        <div class="text-sm text-gray-700">
+                                            <span class="font-bold">توصیه:</span> با استفاده از مترو در ساعت اوج، ۲۰ امتیاز اضافی دریافت کنید!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gradient-to-b from-white to-blue-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-4">امکانات جامع راه‌یار</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">راه‌یار با سه قابلیت اصلی، تمام نیازهای سفر شهری شما را پوشش می‌دهد</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1: Smart Meeting Scheduler -->
+                <div class="feature-card bg-white rounded-2xl shadow-xl p-8 card-shine relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-xl p-4">
+                                <i class="fas fa-calendar-check text-3xl text-blue-600"></i>
+                            </div>
+                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">جدید</span>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">برنامه‌ریز هوشمند جلسات</h3>
+                        <p class="text-gray-600 mb-6">با اتصال به تقویم گوگل، جلسات شما را شناسایی می‌کند و بهترین زمان حرکت را با توجه به ترافیک لحظه‌ای پیشنهاد می‌دهد.</p>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>اتصال خودکار به تقویم گوگل</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>پیشنهاد زمان حرکت بر اساس ترافیک</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>یادآور هوشمند جلسات</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="google-calender.html" class="block w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-center rounded-xl py-4 font-bold hover:shadow-lg transition duration-300">
+                            <i class="fas fa-external-link-alt ml-2"></i>
+                            ورود به برنامه‌ریز جلسات
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Feature 2: Multi-Modal Route Planner -->
+                <div class="feature-card bg-white rounded-2xl shadow-xl p-8 card-shine relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-green-600 to-emerald-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl p-4">
+                                <i class="fas fa-route text-3xl text-green-600"></i>
+                            </div>
+                            <span class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">پربازدید</span>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">مسیریاب چندوجهی</h3>
+                        <p class="text-gray-600 mb-6">مسیرهای مختلف با جزئیات کامل از جمله مسیرهای کم‌ترافیک، مسیرهای حمل‌ونقل عمومی و ترکیبی را با هم مقایسه کنید.</p>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>مقایسه ۵ مسیر مختلف به صورت همزمان</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>نمایش ترافیک لحظه‌ای و پیش‌بینی</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>توصیه مسیر بر اساس اولویت شما</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="map.html" class="block w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white text-center rounded-xl py-4 font-bold hover:shadow-lg transition duration-300">
+                            <i class="fas fa-external-link-alt ml-2"></i>
+                            ورود به مسیریاب
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Feature 3: Green Mobility Rewards -->
+                <div class="feature-card bg-white rounded-2xl shadow-xl p-8 card-shine relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-600 to-pink-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-4">
+                                <i class="fas fa-gift text-3xl text-purple-600"></i>
+                            </div>
+                            <span class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full">محبوب</span>
+                        </div>
+                        
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">سیستم پاداش سفر پایدار</h3>
+                        <p class="text-gray-600 mb-6">با هر سفر پایدار امتیاز بگیرید و در قرعه‌کشی‌های ماهانه شرکت کنید. سفرهای سبز = امتیازات بیشتر!</p>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>کسب امتیاز با استفاده از حمل‌ونقل عمومی</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>قرعه‌کشی ماهانه با جوایز ارزشمند</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 ml-2"></i>
+                                <span>ردیابی تأثیر محیط زیستی شما</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="farhang_sazy.html" class="block w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white text-center rounded-xl py-4 font-bold hover:shadow-lg transition duration-300">
+                            <i class="fas fa-external-link-alt ml-2"></i>
+                            مشاهده جوایز
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-4">چگونه کار می‌کند؟</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">در ۴ گام ساده، راه‌یار به همسفر همیشگی شما تبدیل می‌شود</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="relative mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto">
+                            <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                ۱
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">اتصال تقویم</h3>
+                    <p class="text-gray-600">تقویم گوگل خود را متصل کنید تا جلسات شما شناسایی شود.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="relative mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto">
+                            <div class="w-16 h-16 bg-gradient-to-r from-green-600 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                ۲
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">برنامه‌ریزی سفر</h3>
+                    <p class="text-gray-600">مسیرهای مختلف را مقایسه و بهترین گزینه را انتخاب کنید.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="relative mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full flex items-center justify-center mx-auto">
+                            <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                ۳
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">سفر هوشمند</h3>
+                    <p class="text-gray-600">با هشدارهای به موقع و مسیرهای بهینه به مقصد برسید.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="relative mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-full flex items-center justify-center mx-auto">
+                            <div class="w-16 h-16 bg-gradient-to-r from-yellow-600 to-orange-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                                ۴
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">دریافت پاداش</h3>
+                    <p class="text-gray-600">با سفرهای پایدار امتیاز کسب کنید و جایزه ببرید.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <a href="#features" class="inline-flex items-center bg-gradient-to-r from-blue-600 to-green-500 text-white rounded-xl px-8 py-4 font-bold hover:shadow-xl transition duration-300">
+                    <i class="fas fa-play ml-2"></i>
+                    شروع تجربه راه‌یار
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-5xl font-black mb-2 stats-counter" data-count="98">98</div>
+                    <div class="text-lg opacity-90">رضایت کاربران</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-black mb-2 stats-counter" data-count="124">124</div>
+                    <div class="text-lg opacity-90">تن صرفه‌جویی CO₂</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-black mb-2 stats-counter" data-count="42">42</div>
+                    <div class="text-lg opacity-90">درصد کاهش تأخیر</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl font-black mb-2 stats-counter" data-count="5000000">5,000,000</div>
+                    <div class="text-lg opacity-90">تومان جوایز پرداخت شده</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-4">نظرات کاربران</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">آنچه کاربران راه‌یار می‌گویند</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ali" class="w-12 h-12 rounded-full" alt="علی">
+                        <div class="mr-4">
+                            <div class="font-bold text-gray-800">علی محمدی</div>
+                            <div class="text-sm text-gray-500">مدیر پروژه</div>
+                        </div>
+                        <div class="mr-auto text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"با راه‌یار دیگر هیچ وقت به جلسات دیر نرسیدم. پیشنهاد زمان حرکت واقعاً دقیق است!"</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sara" class="w-12 h-12 rounded-full" alt="سارا">
+                        <div class="mr-4">
+                            <div class="font-bold text-gray-800">سارا کریمی</div>
+                            <div class="text-sm text-gray-500">دانشجو</div>
+                        </div>
+                        <div class="mr-auto text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"با امتیازهایی که از سفرهای مترو جمع کردم، ماه گذشته برنده شارژ رایگان شدم. فوق‌العاده است!"</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Reza" class="w-12 h-12 rounded-full" alt="رضا">
+                        <div class="mr-4">
+                            <div class="font-bold text-gray-800">رضا احمدی</div>
+                            <div class="text-sm text-gray-500">تاجر</div>
+                        </div>
+                        <div class="mr-auto text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"مسیریابی چندوجهی واقعاً به من کمک کرد تا بهترین مسیرها را پیدا کنم. در وقت و هزینه صرفه‌جویی زیادی کردم."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-green-500 text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-6">همین امروز راه‌یار را شروع کنید</h2>
+            <p class="text-xl opacity-90 mb-8">رایگان ثبت‌نام کنید و تفاوت را در سفرهای روزمره خود احساس کنید</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#features" class="bg-white text-gray-800 rounded-xl px-8 py-4 font-bold hover:bg-gray-100 transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-play-circle ml-2"></i>
+                    شروع رایگان
+                </a>
+                <a href="#video-demo" class="bg-transparent border-2 border-white rounded-xl px-8 py-4 font-bold hover:bg-white hover:text-gray-800 transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-question-circle ml-2"></i>
+                    راهنمای استفاده
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="bg-gradient-to-r from-blue-600 to-green-500 rounded-xl p-2">
+                            <i class="fas fa-route text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-black">راه‌یار</h1>
+                            <p class="text-xs text-gray-400">همسفر هوشمند شما</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">پلتفرم جامع مدیریت سفر شهری با هوش مصنوعی و سیستم پاداش سفرهای پایدار</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-500 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-700 transition">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-500 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">امکانات</h3>
+                    <ul class="space-y-3">
+                        <li><a href="smart-meeting-scheduler.html" class="text-gray-400 hover:text-white transition">برنامه‌ریز جلسات</a></li>
+                        <li><a href="map.html" class="text-gray-400 hover:text-white transition">مسیریاب چندوجهی</a></li>
+                        <li><a href="farhang_sazy.html" class="text-gray-400 hover:text-white transition">سیستم پاداش</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">وضعیت ترافیک</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">راهنما</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">سوالات متداول</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">مقالات آموزشی</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">تماس با پشتیبانی</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">شرایط استفاده</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6">تماس با ما</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt ml-2 text-blue-400"></i>
+                            <span class="text-gray-400">تهران، خیابان ولیعصر</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone ml-2 text-blue-400"></i>
+                            <span class="text-gray-400">۰۲۱-۱۲۳۴۵۶۷۸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope ml-2 text-blue-400"></i>
+                            <span class="text-gray-400">info@rahyar.ir</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
+                <p>© ۱۴۰۳ راه‌یار - تمامی حقوق محفوظ است. با عشق برای شهروندان ایرانی ساخته شده است.</p>
+                <p class="mt-2">با هر سفر هوشمند، به کاهش ترافیک و آلودگی هوای شهر کمک کنید.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animate counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-counter');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count') || counter.innerText.replace(/,/g, ''));
+                const current = parseInt(counter.innerText.replace(/,/g, ''));
+                const increment = target / 100;
+                
+                if (current < target) {
+                    counter.innerText = Math.ceil(current + increment).toLocaleString('fa-IR');
+                    setTimeout(() => animateCounters(), 20);
+                } else {
+                    counter.innerText = target.toLocaleString('fa-IR');
+                }
+            });
+        }
+        
+        // Initialize counters on scroll
+        let countersAnimated = false;
+        
+        function checkScroll() {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            if (scrollPosition > windowHeight / 2 && !countersAnimated) {
+                animateCounters();
+                countersAnimated = true;
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Update points counter randomly (simulating live updates)
+        function updatePointsCounter() {
+            const counter = document.getElementById('points-counter');
+            if (counter) {
+                const currentPoints = parseInt(counter.innerText.replace(/,/g, ''));
+                const randomIncrement = Math.floor(Math.random() * 5) + 1;
+                const newPoints = currentPoints + randomIncrement;
+                counter.innerText = newPoints.toLocaleString('fa-IR');
+                
+                // Show notification for new points
+                if (randomIncrement > 0 && Math.random() > 0.7) {
+                    showNotification(`+${randomIncrement} امتیاز جدید برای سفرهای اخیر شما!`);
+                }
+            }
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 left-4 bg-gradient-to-r from-green-600 to-emerald-500 text-white p-4 rounded-xl shadow-lg z-50 max-w-sm';
+            notification.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-gift text-xl"></i>
+                    <div>
+                        <div class="font-bold">امتیاز جدید!</div>
+                        <div class="text-sm opacity-90">${message}</div>
+                    </div>
+                    <button class="mr-auto text-white hover:text-gray-200" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update points every 30-60 seconds
+            setInterval(updatePointsCounter, 30000 + Math.random() * 30000);
+            
+            // Check for scroll to animate counters
+            window.addEventListener('scroll', checkScroll);
+            
+            // Initial check
+            checkScroll();
+            
+            // Add hover effect to feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const icon = this.querySelector('.fa-3x');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.1)';
+                        icon.style.transition = 'transform 0.3s ease';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    const icon = this.querySelector('.fa-3x');
+                    if (icon) {
+                        icon.style.transform = 'scale(1)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

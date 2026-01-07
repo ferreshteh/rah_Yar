@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم پاداش حمل‌ونقل پایدار</title>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JJC1KV5M88"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JJC1KV5M88');
+    </script>
+    <!-- End Google Analytics -->
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-shine::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(0.95);
+                opacity: 1;
+            }
+        }
+        
+        .ticket-pattern {
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 via-blue-50 to-green-50 min-h-screen">
+    <div class="max-w-6xl mx-auto p-4 py-8">
+        <!-- Header -->
+        <div class="bg-gradient-to-l from-emerald-600 via-teal-600 to-cyan-600 rounded-3xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <circle cx="10" cy="10" r="20" fill="white"/>
+                    <circle cx="90" cy="30" r="15" fill="white"/>
+                    <circle cx="50" cy="80" r="25" fill="white"/>
+                </svg>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-white bg-opacity-20 rounded-2xl p-4">
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-4xl font-extrabold mb-2">سفر سبز، آینده بهتر</h1>
+                            <p class="text-green-100 text-lg">با استفاده از حمل‌ونقل عمومی امتیاز بگیرید و جایزه ببرید!</p>
+                        </div>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-20 rounded-2xl px-6 py-4">
+                        <div class="text-5xl font-black mb-1">1,247</div>
+                        <div class="text-sm">امتیاز شما</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <!-- Virtual Card Status -->
+            <div class="md:col-span-2 bg-white rounded-2xl shadow-xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">کارت هوشمند شما</h2>
+                    <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">فعال</span>
+                </div>
+                
+                <div class="bg-gradient-to-l from-purple-600 via-indigo-600 to-blue-600 rounded-2xl p-6 mb-6 card-shine ticket-pattern relative overflow-hidden shadow-2xl">
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-8">
+                            <div>
+                                <div class="text-white text-opacity-80 text-sm mb-1">نام کارت</div>
+                                <div class="text-white text-2xl font-bold">کارت اکو</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-xl px-4 py-2">
+                                <div class="text-white text-xs mb-1">اعتبار</div>
+                                <div class="text-white text-xl font-bold">۲۵۰,۰۰۰ ریال</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="text-white text-opacity-80 text-sm mb-2">شماره کارت</div>
+                            <div class="text-white text-2xl font-mono tracking-wider">۱۲۳۴ ۵۶۷۸ ۹۰۱۲ ۳۴۵۶</div>
+                        </div>
+                        
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <div class="text-white text-opacity-80 text-xs mb-1">نام دارنده</div>
+                                <div class="text-white font-bold">علی محمدی</div>
+                            </div>
+                            <div class="bg-white rounded-lg px-3 py-1">
+                                <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none">
+                                    <circle cx="16" cy="16" r="14" fill="#FF5F00"/>
+                                    <circle cx="22" cy="16" r="14" fill="#EB001B" opacity="0.8"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-4 border-2 border-blue-100">
+                        <div class="text-gray-600 text-sm mb-1">هزینه اشتراک ماهانه</div>
+                        <div class="text-2xl font-bold text-blue-600">۲۹,۰۰۰ ریال</div>
+                        <div class="text-xs text-gray-500 mt-1">۵۰٪ تخفیف ویژه</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-4 border-2 border-green-100">
+                        <div class="text-gray-600 text-sm mb-1">صرفه‌جویی این ماه</div>
+                        <div class="text-2xl font-bold text-green-600">۱۲۰,۰۰۰ ریال</div>
+                        <div class="text-xs text-gray-500 mt-1">نسبت به خودروی شخصی</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="space-y-4">
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl p-6 text-white shadow-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        <div class="text-right">
+                            <div class="text-3xl font-black">۱۵</div>
+                            <div class="text-xs opacity-90">سفر این هفته</div>
+                        </div>
+                    </div>
+                    <div class="text-sm opacity-90">+۳۰٪ نسبت به هفته گذشته</div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-xl">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-green-100 rounded-full p-2">
+                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">رتبه شما</div>
+                            <div class="text-2xl font-black text-green-600">۲۳</div>
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">از ۱,۵۴۲ شهروند فعال</div>
+                </div>
+
+                <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl p-6 border-2 border-purple-200">
+                    <div class="text-sm text-purple-700 mb-2">کاهش آلودگی</div>
+                    <div class="text-3xl font-black text-purple-800 mb-1">۱۲.۵ کیلوگرم</div>
+                    <div class="text-xs text-purple-600">CO₂ کمتر این ماه</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Lottery -->
+        <div class="bg-gradient-to-l from-pink-500 via-purple-600 to-indigo-600 rounded-3xl shadow-2xl p-8 mb-8 text-white relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <svg class="w-full h-full" viewBox="0 0 200 200">
+                    <circle cx="50" cy="50" r="40" fill="white"/>
+                    <circle cx="150" cy="80" r="30" fill="white"/>
+                    <circle cx="100" cy="150" r="50" fill="white"/>
+                </svg>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <h2 class="text-3xl font-black">قرعه‌کشی این ماه</h2>
+                        </div>
+                        <p class="text-purple-100 text-lg">جایزه: شارژ رایگان ۵۰۰,۰۰۰ ریالی کارت حمل‌ونقل</p>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-2xl px-8 py-6 text-center">
+                        <div class="text-6xl font-black mb-2">۸</div>
+                        <div class="text-sm">روز مانده</div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-white bg-opacity-15 rounded-xl p-4 backdrop-blur-sm">
+                        <div class="text-sm mb-1 opacity-90">تعداد شرکت‌کنندگان</div>
+                        <div class="text-3xl font-black">۳,۲۴۱</div>
+                    </div>
+                    <div class="bg-white bg-opacity-15 rounded-xl p-4 backdrop-blur-sm">
+                        <div class="text-sm mb-1 opacity-90">شانس ورود شما</div>
+                        <div class="text-3xl font-black">۱۵ بلیت</div>
+                    </div>
+                    <div class="bg-white bg-opacity-15 rounded-xl p-4 backdrop-blur-sm">
+                        <div class="text-sm mb-1 opacity-90">امتیاز مورد نیاز</div>
+                        <div class="text-3xl font-black">۱۰۰</div>
+                    </div>
+                </div>
+
+                <div class="bg-white bg-opacity-20 rounded-xl p-4 backdrop-blur-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-sm opacity-90 mb-1">پیشرفت شما برای بلیت بعدی</div>
+                            <div class="text-xl font-bold">۴۷ / ۱۰۰ امتیاز</div>
+                        </div>
+                        <div class="text-2xl font-black">۴۷٪</div>
+                    </div>
+                    <div class="mt-3 bg-white bg-opacity-20 rounded-full h-3 overflow-hidden">
+                        <div class="bg-yellow-400 h-full rounded-full transition-all duration-500 pulse-ring" style="width: 47%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Earn Points -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">چگونه امتیاز کسب کنیم؟</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="flex items-start gap-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-5 border-2 border-blue-100">
+                    <div class="bg-blue-500 rounded-full p-3 flex-shrink-0">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                            <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1v-5a1 1 0 00-.293-.707l-2-2A1 1 0 0015 7h-1z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-2 text-lg">اتوبوس شهری</h3>
+                        <p class="text-gray-600 text-sm mb-2">هر سفر با اتوبوس</p>
+                        <div class="text-2xl font-black text-blue-600">+۱۰ امتیاز</div>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border-2 border-green-100">
+                    <div class="bg-green-500 rounded-full p-3 flex-shrink-0">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-2 text-lg">مترو</h3>
+                        <p class="text-gray-600 text-sm mb-2">هر سفر با مترو</p>
+                        <div class="text-2xl font-black text-green-600">+۱۵ امتیاز</div>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border-2 border-purple-100">
+                    <div class="bg-purple-500 rounded-full p-3 flex-shrink-0">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-2 text-lg">تاکسی اشتراکی</h3>
+                        <p class="text-gray-600 text-sm mb-2">هر سفر با سرویس اشتراکی</p>
+                        <div class="text-2xl font-black text-purple-600">+۸ امتیاز</div>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-5 border-2 border-orange-100">
+                    <div class="bg-orange-500 rounded-full p-3 flex-shrink-0">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-2 text-lg">دوچرخه عمومی</h3>
+                        <p class="text-gray-600 text-sm mb-2">هر سفر با دوچرخه</p>
+                        <div class="text-2xl font-black text-orange-600">+۲۰ امتیاز</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-gradient-to-l from-indigo-50 to-purple-50 rounded-xl p-6 border-2 border-indigo-100">
+                <div class="flex items-start gap-4">
+                    <svg class="w-8 h-8 text-indigo-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-2">پاداش ویژه!</h3>
+                        <p class="text-gray-600 text-sm">با ۱۰ سفر متوالی در یک هفته، ۵۰ امتیاز اضافی دریافت کنید. سفرهای ساعت اوج (۷-۹ صبح و ۵-۷ عصر) امتیاز دوبرابر دارند!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Trips -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">سفرهای اخیر</h2>
+                <button class="text-indigo-600 font-bold text-sm hover:text-indigo-700">مشاهده همه</button>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-4 bg-gradient-to-l from-blue-50 to-white rounded-xl border border-blue-100">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-blue-500 rounded-full p-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">مترو تجریش → میدان ولیعصر</div>
+                            <div class="text-sm text-gray-500">امروز، ۸:۳۰ صبح</div>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-green-600 font-bold text-lg">+۱۵</div>
+                        <div class="text-xs text-gray-500">امتیاز</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-gradient-to-l from-green-50 to-white rounded-xl border border-green-100">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-green-500 rounded-full p-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">اتوبوس خط ۱۰ → ستارخان</div>
+                            <div class="text-sm text-gray-500">دیروز، ۵:۴۵ عصر</div>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-green-600 font-bold text-lg">+۲۰</div>
+                        <div class="text-xs text-gray-500">امتیاز دوبرابر</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-4 bg-gradient-to-l from-purple-50 to-white rounded-xl border border-purple-100">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-purple-500 rounded-full p-3">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">تاکسی اشتراکی → اقدسیه</div>
+                            <div class="text-sm text-gray-500">دیروز، ۲:۱۵ بعدازظهر</div>
+                        </div>
+                    </div>
+                    <div class

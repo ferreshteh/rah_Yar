@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامه‌ریز مسیر پایدار - مسیریابی چندوجهی</title>
+
+
+
+
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JJC1KV5M88"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JJC1KV5M88');
+    </script>
+    <!-- End Google Analytics -->
+
+
+
+
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-shine::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .route-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .route-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .route-card.recommended {
+            border-left-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+        
+        .traffic-high {
+            border-left-color: #ef4444;
+        }
+        
+        .traffic-medium {
+            border-left-color: #f59e0b;
+        }
+        
+        .traffic-low {
+            border-left-color: #10b981;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #e5e7eb;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        
+        .mode-selector {
+            transition: all 0.3s ease;
+        }
+        
+        .mode-selector.active {
+            background-color: #3b82f6;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .map-container {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+        
+        .step-indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            margin-left: 10px;
+        }
+        
+        .step-indicator.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div class="max-w-7xl mx-auto p-4 py-6">
+        <!-- Header -->
+        <div class="bg-gradient-to-l from-emerald-600 via-blue-600 to-indigo-600 rounded-3xl shadow-2xl p-6 mb-8 text-white relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <circle cx="10" cy="10" r="20" fill="white"/>
+                    <circle cx="90" cy="30" r="15" fill="white"/>
+                    <circle cx="50" cy="80" r="25" fill="white"/>
+                </svg>
+            </div>
+            <div class="relative z-10">
+                <div class="flex items-center justify-between flex-col md:flex-row">
+                    <div class="mb-4 md:mb-0">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="bg-white bg-opacity-20 rounded-2xl p-3">
+                                <i class="fas fa-route text-2xl"></i>
+                            </div>
+                            <h1 class="text-3xl font-extrabold">برنامه‌ریز مسیر پایدار</h1>
+                        </div>
+                        <p class="text-blue-100 text-lg">مسیریابی هوشمند با توصیه‌های چندوجهی حمل‌ونقل</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-center bg-white bg-opacity-20 rounded-2xl px-5 py-3">
+                            <div class="text-3xl font-black mb-1">۱,۲۴۷</div>
+                            <div class="text-sm">امتیاز شما</div>
+                        </div>
+                        <button class="bg-white text-blue-700 font-bold rounded-xl px-5 py-3 hover:bg-blue-50 transition">
+                            <i class="fas fa-gift ml-2"></i>
+                            جوایز
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Left Column: Input & Route List -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Location Input Section -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="step-indicator active">۱</div>
+                        <h2 class="text-xl font-bold text-gray-800">مبدا و مقصد</h2>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-green-100 text-green-700 rounded-full p-3">
+                                <i class="fas fa-location-arrow"></i>
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-sm text-gray-600 mb-1">مبدا حرکت</label>
+                                <div class="flex gap-2">
+                                    <input type="text" class="w-full p-3 border-2 border-green-200 rounded-xl focus:outline-none focus:border-green-500" placeholder="آدرس خود را وارد کنید" value="تهران، میدان ونک" id="origin-input">
+                                    <button class="bg-green-600 text-white rounded-xl px-4 hover:bg-green-700 transition" id="use-location">
+                                        <i class="fas fa-crosshairs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <div class="bg-blue-100 text-blue-700 rounded-full p-3">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-sm text-gray-600 mb-1">مقصد</label>
+                                <div class="flex gap-2">
+                                    <input type="text" class="w-full p-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-500" placeholder="آدرس مقصد را وارد کنید" value="کارخانه نوآوری آزادی" id="destination-input">
+                                    <button class="bg-blue-600 text-white rounded-xl px-4 hover:bg-blue-700 transition" id="calendar-btn">
+                                        <i class="far fa-calendar-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3 mt-4">
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">زمان حرکت</label>
+                                <select class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500">
+                                    <option>حالا</option>
+                                    <option>ساعت ۱۵:۴۵ (پیشنهادی)</option>
+                                    <option>ساعت ۱۶:۰۰</option>
+                                    <option>ساعت ۱۶:۳۰</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">اولویت</label>
+                                <select class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500" id="priority-select">
+                                    <option value="balanced">متوازن (زمان + پایداری)</option>
+                                    <option value="fastest">سریع‌ترین مسیر</option>
+                                    <option value="eco">پایدارترین مسیر</option>
+                                    <option value="cheapest">ارزان‌ترین مسیر</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center mt-6">
+                            <button class="bg-gradient-to-l from-emerald-500 to-blue-500 text-white font-bold rounded-xl px-8 py-4 text-lg hover:shadow-xl transition-all duration-300" id="find-routes">
+                                <i class="fas fa-search ml-2"></i>
+                                پیدا کردن مسیرها
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Transport Mode Selector -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="step-indicator">۲</div>
+                        <h2 class="text-xl font-bold text-gray-800">نحوه جابجایی</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-3">
+                        <div class="mode-selector rounded-xl p-4 text-center border-2 border-gray-200 cursor-pointer" data-mode="all">
+                            <div class="text-2xl mb-2">
+                                <i class="fas fa-layer-group text-gray-600"></i>
+                            </div>
+                            <div class="font-bold text-gray-700">همه</div>
+                        </div>
+                        <div class="mode-selector rounded-xl p-4 text-center border-2 border-gray-200 cursor-pointer active" data-mode="public">
+                            <div class="text-2xl mb-2">
+                                <i class="fas fa-bus text-blue-600"></i>
+                            </div>
+                            <div class="font-bold text-gray-700">حمل‌ونقل عمومی</div>
+                        </div>
+                        <div class="mode-selector rounded-xl p-4 text-center border-2 border-gray-200 cursor-pointer" data-mode="driving">
+                            <div class="text-2xl mb-2">
+                                <i class="fas fa-car text-red-500"></i>
+                            </div>
+                            <div class="font-bold text-gray-700">خودروی شخصی</div>
+                        </div>
+                        <div class="mode-selector rounded-xl p-4 text-center border-2 border-gray-200 cursor-pointer" data-mode="mixed">
+                            <div class="text-2xl mb-2">
+                                <i class="fas fa-exchange-alt text-purple-500"></i>
+                            </div>
+                            <div class="font-bold text-gray-700">ترکیبی</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Route Results -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center">
+                            <div class="step-indicator">۳</div>
+                            <h2 class="text-xl font-bold text-gray-800">مسیرهای پیشنهادی</h2>
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            <i class="fas fa-filter ml-1"></i>
+                            ۵ مسیر یافت شد
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4" id="routes-container">
+                        <!-- Route 1: Recommended Public Transport -->
+                        <div class="route-card recommended bg-gradient-to-l from-emerald-50 to-white rounded-xl p-5 border border-emerald-100">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-emerald-600 text-white rounded-full p-3">
+                                        <i class="fas fa-bus"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-gray-800 text-lg">مترو + اتوبوس</h3>
+                                            <span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-1 rounded-full">توصیه می‌شود</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm">پایدارترین و سریع‌ترین مسیر</p>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-2xl font-black text-gray-800">۴۲ دقیقه</div>
+                                    <div class="text-emerald-600 font-bold">+۳۵ امتیاز</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4 text-sm">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-road text-gray-400"></i>
+                                        <span>۸.۲ کیلومتر</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-coins text-gray-400"></i>
+                                        <span>۱۲,۰۰۰ ریال</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-leaf text-gray-400"></i>
+                                        <span>۱.۲ کیلوگرم CO₂</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-sm text-gray-600">جزئیات مسیر:</div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <span class="text-sm">مترو خط ۱ (۱۰ دقیقه)</span>
+                                        <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                        <span class="text-sm">اتوبوس خط ۱۰ (۱۸ دقیقه)</span>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                        <span class="text-sm">پیاده‌روی (۵ دقیقه)</span>
+                                    </div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-red-400 via-blue-400 to-green-400" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <div class="bg-blue-100 text-blue-700 rounded-full px-3 py-1 text-sm">
+                                        <i class="fas fa-clock ml-1"></i>
+                                        خروج: ۱۵:۴۵
+                                    </div>
+                                    <div class="bg-green-100 text-green-700 rounded-full px-3 py-1 text-sm">
+                                        <i class="fas fa-check-circle ml-1"></i>
+                                        رسیدن: ۱۶:۲۷
+                                    </div>
+                                </div>
+                                <button class="bg-emerald-600 text-white rounded-xl px-5 py-2 hover:bg-emerald-700 transition">
+                                    <i class="fas fa-directions ml-2"></i>
+                                    انتخاب این مسیر
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Route 2: Low Traffic Driving -->
+                        <div class="route-card traffic-low bg-gradient-to-l from-blue-50 to-white rounded-xl p-5 border border-blue-100">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-blue-600 text-white rounded-full p-3">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-gray-800 text-lg">رانندگی مسیر جایگزین</h3>
+                                            <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">ترافیک کم</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm">مسیر جایگزین با ترافیک کمتر</p>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-2xl font-black text-gray-800">۳۸ دقیقه</div>
+                                    <div class="text-gray-500 text-sm">بدون امتیاز</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4 text-sm">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-road text-gray-400"></i>
+                                        <span>۱۱.۵ کیلومتر</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-gas-pump text-gray-400"></i>
+                                        <span>۴۵,۰۰۰ ریال</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-leaf text-gray-400"></i>
+                                        <span>۳.۸ کیلوگرم CO₂</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-sm text-gray-600">وضعیت ترافیک:</div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-1">
+                                            <i class="fas fa-traffic-light text-green-500"></i>
+                                            <span class="text-sm">۸۰% مسیر روان</span>
+                                        </div>
+                                        <div class="flex items-center gap-1">
+                                            <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                            <span class="text-sm">۲۰% ترافیک متوسط</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-green-400 via-green-400 to-yellow-400" style="width: 80%"></div>
+                                    <div class="progress-fill bg-gradient-to-r from-yellow-400 to-yellow-400" style="width: 20%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-info-circle text-blue-500 ml-1"></i>
+                                    مسیر آزادراه به سمت غرب پیشنهاد می‌شود
+                                </div>
+                                <button class="bg-blue-600 text-white rounded-xl px-5 py-2 hover:bg-blue-700 transition">
+                                    <i class="fas fa-directions ml-2"></i>
+                                    انتخاب این مسیر
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Route 3: High Traffic Driving -->
+                        <div class="route-card traffic-high bg-gradient-to-l from-red-50 to-white rounded-xl p-5 border border-red-100">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-red-600 text-white rounded-full p-3">
+                                        <i class="fas fa-car"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-gray-800 text-lg">رانندگی مستقیم</h3>
+                                            <span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">ترافیک سنگین</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm">مسیر مستقیم با ترافیک سنگین</p>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-2xl font-black text-gray-800">۶۵ دقیقه</div>
+                                    <div class="text-gray-500 text-sm">بدون امتیاز</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4 text-sm">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-road text-gray-400"></i>
+                                        <span>۹.۸ کیلومتر</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-gas-pump text-gray-400"></i>
+                                        <span>۵۲,۰۰۰ ریال</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-leaf text-gray-400"></i>
+                                        <span>۴.۱ کیلوگرم CO₂</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-sm text-gray-600">وضعیت ترافیک:</div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-1">
+                                            <i class="fas fa-traffic-light text-red-500"></i>
+                                            <span class="text-sm">۷۰% مسیر ترافیک سنگین</span>
+                                        </div>
+                                        <div class="flex items-center gap-1">
+                                            <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                                            <span class="text-sm">۳۰% ترافیک متوسط</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-red-400 via-red-400 to-yellow-400" style="width: 70%"></div>
+                                    <div class="progress-fill bg-gradient-to-r from-yellow-400 to-yellow-400" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-red-600">
+                                    <i class="fas fa-exclamation-triangle ml-1"></i>
+                                    ترافیک سنگین در خیابان ولیعصر و میدان انقلاب
+                                </div>
+                                <button class="bg-gray-300 text-gray-700 rounded-xl px-5 py-2 hover:bg-gray-400 transition">
+                                    <i class="fas fa-directions ml-2"></i>
+                                    انتخاب این مسیر
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Route 4: Mixed Mode -->
+                        <div class="route-card traffic-medium bg-gradient-to-l from-purple-50 to-white rounded-xl p-5 border border-purple-100">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-purple-600 text-white rounded-full p-3">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-gray-800 text-lg">ترکیبی (خودرو + مترو)</h3>
+                                            <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">ترافیک متوسط</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm">خودرو تا ایستگاه مترو + مترو</p>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-2xl font-black text-gray-800">۴۷ دقیقه</div>
+                                    <div class="text-purple-600 font-bold">+۱۵ امتیاز</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4 text-sm">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-road text-gray-400"></i>
+                                        <span>۱۰.۳ کیلومتر</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-coins text-gray-400"></i>
+                                        <span>۲۸,۰۰۰ ریال</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-leaf text-gray-400"></i>
+                                        <span>۲.۴ کیلوگرم CO₂</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-sm text-gray-600">جزئیات مسیر:</div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                        <span class="text-sm">رانندگی (۱۵ دقیقه)</span>
+                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <span class="text-sm">مترو خط ۲ (۲۰ دقیقه)</span>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                        <span class="text-sm">پیاده‌روی (۳ دقیقه)</span>
+                                    </div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-blue-400 via-red-400 to-green-400" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-parking text-purple-500 ml-1"></i>
+                                    پارکینگ رایگان در ایستگاه مترو شریعتی
+                                </div>
+                                <button class="bg-purple-600 text-white rounded-xl px-5 py-2 hover:bg-purple-700 transition">
+                                    <i class="fas fa-directions ml-2"></i>
+                                    انتخاب این مسیر
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Route 5: Bike + Public Transport -->
+                        <div class="route-card traffic-low bg-gradient-to-l from-green-50 to-white rounded-xl p-5 border border-green-100">
+                            <div class="flex items-start justify-between mb-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-green-600 text-white rounded-full p-3">
+                                        <i class="fas fa-bicycle"></i>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <h3 class="font-bold text-gray-800 text-lg">دوچرخه + اتوبوس</h3>
+                                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">کمترین آلودگی</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm">سالم‌ترین و پاک‌ترین مسیر</p>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-2xl font-black text-gray-800">۵۵ دقیقه</div>
+                                    <div class="text-green-600 font-bold">+۴۰ امتیاز</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4 text-sm">
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-road text-gray-400"></i>
+                                        <span>۹.۵ کیلومتر</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-coins text-gray-400"></i>
+                                        <span>۵,۰۰۰ ریال</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <i class="fas fa-leaf text-gray-400"></i>
+                                        <span>۰.۲ کیلوگرم CO₂</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-sm text-gray-600">جزئیات مسیر:</div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-3 h-3 rounded-full bg-green-600"></div>
+                                        <span class="text-sm">دوچرخه (۲۰ دقیقه)</span>
+                                        <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                        <span class="text-sm">اتوبوس خط ۷ (۲۵ دقیقه)</span>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                        <span class="text-sm">پیاده‌روی (۵ دقیقه)</span>
+                                    </div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-gradient-to-r from-green-600 via-blue-400 to-green-400" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm text-gray-600">
+                                    <i class="fas fa-heart text-green-500 ml-1"></i>
+                                    این مسیر ۲۰۰ کالری می‌سوزاند و برای سلامتی مفید است
+                                </div>
+                                <button class="bg-green-600 text-white rounded-xl px-5 py-2 hover:bg-green-700 transition">
+                                    <i class="fas fa-directions ml-2"></i>
+                                    انتخاب این مسیر
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Map & Summary -->
+            <div class="space-y-6">
+                <!-- Map Visualization -->
+                <div class="map-container bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">نمایش مسیر</h2>
+                        <div class="flex gap-2">
+                            <button class="bg-gray-100 text-gray-700 rounded-lg px-3 py-1 text-sm">
+                                <i class="fas fa-map ml-1"></i>
+                                نقشه
+                            </button>
+                            <button class="bg-gray-100 text-gray-700 rounded-lg px-3 py-1 text-sm">
+                                <i class="fas fa-list ml-1"></i>
+                                لیست
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="h-64 rounded-xl bg-gradient-to-br from-blue-100 to-green-100 relative overflow-hidden mb-4">
+                        <!-- Simple map representation -->
+                        <div class="absolute top-4 right-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center">
+                            <i class="fas fa-location-arrow text-2xl text-green-600"></i>
+                            <div class="pulse-dot bg-green-500"></div>
+                        </div>
+                        
+                        <div class="absolute bottom-4 left-4 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-2xl text-red-600"></i>
+                            <div class="pulse-dot bg-red-500"></div>
+                        </div>
+                        
+                        <!-- Route lines -->
+                        <div class="absolute top-1/2 right-20 w-1/3 h-1 bg-blue-500 rounded-full"></div>
+                        <div class="absolute top-1/2 right-20 w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <div class="absolute top-1/3 left-1/3 w-1/3 h-1 bg-green-500 rounded-full transform rotate-45"></div>
+                        <div class="absolute top-1/3 left-1/3 w-3 h-3 bg-green-500 rounded-full"></div>
+                        <div class="absolute bottom-1/3 right-1/4 w-1/2 h-1 bg-red-500 rounded-full transform -rotate-12"></div>
+                        <div class="absolute bottom-1/3 right-1/4 w-3 h-3 bg-red-500 rounded-full"></div>
+                    </div>
+                    
+                    <div class="text-center text-sm text-gray-600">
+                        <i class="fas fa-info-circle ml-1"></i>
+                        برای مشاهده جزئیات دقیق‌تر مسیر، روی هر مسیر کلیک کنید
+                    </div>
+                </div>
+                
+                <!-- Route Summary -->
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">خلاصه مقایسه</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="text-gray-700">سریع‌ترین مسیر:</div>
+                            <div class="font-bold">رانندگی مسیر جایگزین (۳۸ دقیقه)</div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="text-gray-700">پایدارترین مسیر:</div>
+                            <div class="font-bold text-green-600">دوچرخه + اتوبوس</div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="text-gray-700">ارزان‌ترین مسیر:</div>
+                            <div class="font-bold">دوچرخه + اتوبوس (۵,۰۰۰ ریال)</div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="text-gray-700">بیشترین امتیاز:</div>
+                            <div class="font-bold text-green-600">دوچرخه + اتوبوس (۴۰ امتیاز)</div>
+                        </div>
+                        
+                        <div class="pt-4 border-t border-gray-200">
+                            <div class="text-gray-700 mb-2">توصیه سیستم:</div>
+                            <div class="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl p-4 border border-emerald-200">
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-emerald-600 text-xl mt-1"></i>
+                                    <div>
+                                        <div class="font-bold text-emerald-700 mb-1">مسیر مترو + اتوبوس توصیه می‌شود</div>
+                                        <p class="text-sm text-gray-600">این مسیر تعادل مناسبی بین سرعت، هزینه و پایداری محیط زیست دارد. شما ۳۵ امتیاز کسب خواهید کرد و ۴۲ دقیقه طول می‌کشد.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Environmental Impact -->
+                <div class="bg-gradient-to-l from-emerald-600 to-teal-600 rounded-2xl shadow-xl p-6 text-white">
+                    <h2 class="text-xl font-bold mb-4">تاثیر محیط زیستی</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>صرفه‌جویی CO₂ با حمل‌ونقل عمومی:</span>
+                                <span class="font-bold">۲.۹ کیلوگرم</span>
+                            </div>
+                            <div class="progress-bar bg-emerald-700">
+                                <div class="progress-fill bg-yellow-400" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>صرفه‌جویی هزینه:</span>
+                                <span class="font-bold">۴۰,۰۰۰ ریال</span>
+                            </div>
+                            <div class="progress-bar bg-emerald-700">
+                                <div class="progress-fill bg-green-400" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-15 rounded-xl p-4 mt-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-award text-2xl text-yellow-300"></i>
+                                <div>
+                                    <div class="font-bold">با ۱۰ سفر این ماه، در قرعه‌کشی شرکت کنید!</div>
+                                    <div class="text-sm opacity-90">شارژ رایگان ۵۰۰,۰۰۰ ریالی کارت حمل‌ونقل</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <p>سیستم پاداش حمل‌ونقل پایدار - تمامی حقوق محفوظ است © ۱۴۰۳</p>
+            <p class="mt-1">با هر سفر با حمل‌ونقل عمومی، به کاهش ترافیک و آلودگی هوا کمک کنید</p>
+        </div>
+    </div>
+
+    <script>
+        // Mode selector interaction
+        document.querySelectorAll('.mode-selector').forEach(selector => {
+            selector.addEventListener('click', function() {
+                document.querySelectorAll('.mode-selector').forEach(el => {
+                    el.classList.remove('active');
+                    el.style.backgroundColor = '';
+                    el.style.color = '';
+                });
+                
+                this.classList.add('active');
+                this.style.backgroundColor = '#3b82f6';
+                this.style.color = 'white';
+                
+                // Filter routes based on mode
+                const mode = this.dataset.mode;
+                filterRoutes(mode);
+            });
+        });
+        
+        // Route filtering function
+        function filterRoutes(mode) {
+            const routes = document.querySelectorAll('.route-card');
+            routes.forEach(route => {
+                route.style.display = 'block';
+                
+                if (mode === 'public' && !route.querySelector('.fa-bus, .fa-subway, .fa-bicycle')) {
+                    route.style.display = 'none';
+                } else if (mode === 'driving' && !route.querySelector('.fa-car')) {
+                    route.style.display = 'none';
+                } else if (mode === 'mixed' && !route.querySelector('.fa-exchange-alt')) {
+                    route.style.display = 'none';
+                }
+            });
+        }
+        
+        // Use current location button
+        document.getElementById('use-location').addEventListener('click', function() {
+            document.getElementById('origin-input').value = 'موقعیت فعلی (GPS)';
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-check"></i>';
+            }, 1000);
+        });
+        
+        // Calendar button
+        document.getElementById('calendar-btn').addEventListener('click', function() {
+            alert('اتصال به تقویم گوگل - این قابلیت در نسخه کامل فعال خواهد شد');
+        });
+        
+        // Find routes button
+        document.getElementById('find-routes').addEventListener('click', function() {
+            const origin = document.getElementById('origin-input').value;
+            const destination = document.getElementById('destination-input').value;
+            const priority = document.getElementById('priority-select').value;
+            
+            if (!origin || !destination) {
+                alert('لطفاً مبدا و مقصد را وارد کنید');
+                return;
+            }
+            
+            // Show loading state
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i>در حال پیدا کردن مسیرها...';
+            this.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+                
+                // Highlight step 3
+                document.querySelectorAll('.step-indicator')[2].classList.add('active');
+                
+                // Show success message
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 left-4 bg-green-600 text-white p-4 rounded-xl shadow-lg z-50';
+                notification.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-check-circle text-xl"></i>
+                        <div>
+                            <div class="font-bold">۵ مسیر پیدا شد!</div>
+                            <div class="text-sm">از ${origin} به ${destination}</div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }, 1500);
+        });
+        
+        // Route selection
+        document.querySelectorAll('.route-card button').forEach(button => {
+            button.addEventListener('click', function() {
+                const routeCard = this.closest('.route-card');
+                const routeName = routeCard.querySelector('h3').textContent;
+                
+                // Reset all cards
+                document.querySelectorAll('.route-card').forEach(card => {
+                    card.classList.remove('recommended');
+                    card.style.boxShadow = '';
+                });
+                
+                // Highlight selected card
+                routeCard.classList.add('recommended');
+                routeCard.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.2)';
+                
+                // Show confirmation
+                alert(`مسیر "${routeName}" انتخاب شد. اپلیکیشن نقشه باز خواهد شد.`);
+            });
+        });
+        
+        // Priority select change
+        document.getElementById('priority-select').addEventListener('change', function() {
+            const priority = this.value;
+            let message = '';
+            
+            if (priority === 'fastest') {
+                message = 'سریع‌ترین مسیرها در اولویت نمایش قرار گرفتند';
+            } else if (priority === 'eco') {
+                message = 'پایدارترین مسیرها در اولویت نمایش قرار گرفتند';
+            } else if (priority === 'cheapest') {
+                message = 'ارزان‌ترین مسیرها در اولویت نمایش قرار گرفتند';
+            } else {
+                message = 'مسیرهای متوازن (زمان + پایداری) در اولویت نمایش قرار گرفتند';
+            }
+            
+            // Show brief notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 left-4 bg-blue-600 text-white p-3 rounded-xl shadow-lg z-50 text-sm';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 2000);
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default mode
+            document.querySelector('.mode-selector.active').style.backgroundColor = '#3b82f6';
+            document.querySelector('.mode-selector.active').style.color = 'white';
+        });
+    </script>
+</body>
+</html>

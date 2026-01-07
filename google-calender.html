@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دستیار هوشمند جلسات</title>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JJC1KV5M88"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JJC1KV5M88');
+    </script>
+    <!-- End Google Analytics -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 50%, #fce7f3 100%);
+            direction: rtl;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 32px;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(to right, #4f46e5, #7c3aed);
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding: 24px;
+            color: white;
+            margin-bottom: 24px;
+        }
+        
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .icon-container {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 12px;
+            margin-left: 16px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #4f46e5, #7c3aed);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+        
+        .notification-btn {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .notification-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .badge {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            background-color: #ef4444;
+            color: white;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Current Location */
+        .location-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .location-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            color: #4b5563;
+        }
+        
+        .location-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .location-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+        
+        /* Meetings Section */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        /* Meeting Card */
+        .meeting-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 16px;
+            border-right: 4px solid;
+            transition: all 0.3s;
+        }
+        
+        .meeting-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .meeting-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .meeting-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .meeting-time {
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .date-badge {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        
+        .delete-btn {
+            color: #9ca3af;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .delete-btn:hover {
+            color: #ef4444;
+        }
+        
+        .meeting-location {
+            display: flex;
+            align-items: flex-start;
+            color: #4b5563;
+            font-size: 14px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        /* Departure Card */
+        .departure-card {
+            background: linear-gradient(to right, #ecfdf5, #f0fdfa);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .departure-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .departure-title {
+            display: flex;
+            align-items: center;
+            color: #065f46;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .duration-badge {
+            font-size: 14px;
+            color: #065f46;
+            background-color: #a7f3d0;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+        
+        .departure-prediction {
+            display: flex;
+            align-items: flex-start;
+            color: #047857;
+            font-size: 14px;
+        }
+        
+        /* Routes Section */
+        .routes-toggle {
+            color: inherit;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .routes-toggle:hover {
+            opacity: 0.7;
+        }
+        
+        .routes-container {
+            margin-top: 16px;
+            display: none;
+        }
+        
+        .routes-container.show {
+            display: block;
+        }
+        
+        .route-card {
+            background: linear-gradient(to right, #f9fafb, white);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+        
+        .route-card:hover {
+            border-color: #d1d5db;
+        }
+        
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .route-type {
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .route-details {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .route-traffic {
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .traffic-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 8px;
+        }
+        
+        /* Add Meeting Form */
+        .add-meeting-form {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 2px solid #e0e7ff;
+        }
+        
+        .form-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        .form-full {
+            grid-column: span 2;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .color-option.selected {
+            box-shadow: 0 0 0 4px white, 0 0 0 6px #9ca3af;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .form-actions .btn {
+            flex: 1;
+            padding: 12px;
+        }
+        
+        /* Notifications Panel */
+        .notifications-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 80px;
+        }
+        
+        .notifications-panel {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 480px;
+            margin: 0 16px;
+            max-height: 70vh;
+            overflow: hidden;
+        }
+        
+        .notifications-header {
+            background: linear-gradient(to right, #4f46e5, #6366f1);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+        }
+        
+        .notifications-title {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .close-btn {
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+        
+        .close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .notifications-list {
+            overflow-y: auto;
+            max-height: calc(70vh - 80px);
+            padding: 8px;
+        }
+        
+        .notification-empty {
+            padding: 32px;
+            text-align: center;
+            color: #6b7280;
+        }
+        
+        .notification-item {
+            padding: 16px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            border-right: 4px solid;
+        }
+        
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .notification-content {
+            display: flex;
+            align-items: flex-start;
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-weight: bold;
+            color: #1f2937;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .notification-message {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .notification-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 8px;
+        }
+        
+        .notification-time {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .mark-read-btn {
+            font-size: 12px;
+            color: #2563eb;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-read {
+            opacity: 0.6;
+        }
+        
+        /* Utility Classes */
+        .mr-2 { margin-right: 8px; }
+        .ml-2 { margin-left: 8px; }
+        .mt-1 { margin-top: 4px; }
+        .mt-2 { margin-top: 8px; }
+        .mb-1 { margin-bottom: 4px; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mb-4 { margin-bottom: 16px; }
+        .mb-6 { margin-bottom: 24px; }
+        
+        .text-sm { font-size: 14px; }
+        .text-xs { font-size: 12px; }
+        
+        .font-bold { font-weight: bold; }
+        .font-medium { font-weight: 500; }
+        
+        /* Color Classes */
+        .color-blue { border-color: #3b82f6; }
+        .color-blue-bg { background-color: #3b82f6; }
+        .color-blue-light { background-color: #eff6ff; color: #1e40af; }
+        
+        .color-purple { border-color: #8b5cf6; }
+        .color-purple-bg { background-color: #8b5cf6; }
+        .color-purple-light { background-color: #f5f3ff; color: #5b21b6; }
+        
+        .color-green { border-color: #10b981; }
+        .color-green-bg { background-color: #10b981; }
+        .color-green-light { background-color: #ecfdf5; color: #047857; }
+        
+        .color-red { border-color: #ef4444; }
+        .color-red-bg { background-color: #ef4444; }
+        .color-red-light { background-color: #fef2f2; color: #b91c1c; }
+        
+        .color-orange { border-color: #f97316; }
+        .color-orange-bg { background-color: #f97316; }
+        .color-orange-light { background-color: #fff7ed; color: #c2410c; }
+        
+        .notification-urgent { background-color: #fef2f2; border-color: #ef4444; }
+        .notification-high { background-color: #fff7ed; border-color: #f97316; }
+        .notification-normal { background-color: #eff6ff; border-color: #3b82f6; }
+        
+        /* Google Calendar Widget Styles */
+        .calendar-widget {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-left: 16px;
+            min-width: 200px;
+        }
+        
+        .calendar-widget:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+        
+        .calendar-widget.connected {
+            background-color: rgba(16, 185, 129, 0.2);
+        }
+        
+        .calendar-widget.disconnected {
+            background-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .calendar-icon {
+            background-color: white;
+            border-radius: 12px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4f46e5;
+            font-weight: bold;
+            font-size: 20px;
+            margin-left: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar-info {
+            flex: 1;
+        }
+        
+        .calendar-title {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .calendar-status {
+            font-size: 12px;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .calendar-status i {
+            margin-left: 4px;
+            font-size: 14px;
+        }
+        
+        .calendar-status.connected {
+            color: #a7f3d0;
+        }
+        
+        .calendar-status.disconnected {
+            color: #fecaca;
+        }
+        
+        /* Calendar Sync Options */
+        .calendar-sync-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+        
+        .calendar-sync-panel {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .calendar-sync-header {
+            background: linear-gradient(to right, #4f46e5, #6366f1);
+            padding: 16px;
+            color: white;
+            text-align: center;
+        }
+        
+        .calendar-sync-title {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calendar-sync-body {
+            padding: 24px;
+        }
+        
+        .calendar-sync-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background-color: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .sync-toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background-color: #d1d5db;
+            border-radius: 12px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .sync-toggle.active {
+            background-color: #10b981;
+        }
+        
+        .sync-toggle-handle {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sync-toggle.active .sync-toggle-handle {
+            right: 22px;
+        }
+        
+        .calendar-sync-options {
+            margin-top: 20px;
+        }
+        
+        .sync-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: #f9fafb;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sync-option:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .sync-option.selected {
+            background-color: #eff6ff;
+            border: 2px solid #3b82f6;
+        }
+        
+        .sync-option-icon {
+            background-color: #e5e7eb;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 12px;
+            color: #4b5563;
+        }
+        
+        .sync-option-info {
+            flex: 1;
+        }
+        
+        .sync-option-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+        
+        .sync-option-desc {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .sync-option-check {
+            color: #10b981;
+            font-size: 18px;
+            opacity: 0;
+        }
+        
+        .sync-option.selected .sync-option-check {
+            opacity: 1;
+        }
+        
+        .calendar-sync-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .calendar-sync-actions .btn {
+            flex: 1;
+            padding: 12px;
+        }
+        
+        /* Sync Indicator */
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            z-index: 90;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .sync-indicator i {
+            margin-left: 8px;
+            color: #10b981;
+        }
+        
+        .sync-indicator.syncing i {
+            color: #f59e0b;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-top">
+                <div class="header-title">
+                    <div class="icon-container">
+                        <i class="fas fa-calendar-alt fa-lg"></i>
+                    </div>
+                    <div>
+                        <h1>دستیار هوشمند جلسات</h1>
+                        <p class="subtitle">مدیریت زمان با راه یار </p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <!-- Google Calendar Widget -->
+                    <div class="calendar-widget connected" id="calendarWidget">
+                        <div class="calendar-icon" id="calendarIcon">
+                            <span id="calendarDay">31</span>
+                        </div>
+                        <div class="calendar-info">
+                            <div class="calendar-title"> Google Calender </div>
+                            <div class="calendar-status connected" id="calendarStatus">
+                                <i class="fas fa-check-circle"></i>
+                                <span>متصل شد</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Notification Button -->
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell fa-lg"></i>
+                        <span class="badge" id="notificationBadge">2</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Location -->
+        <div class="location-card">
+            <div class="location-header">
+                <i class="fas fa-map-marker-alt ml-2" style="color: #4f46e5;"></i>
+                <span class="font-bold">موقعیت فعلی:</span>
+            </div>
+            <input type="text" class="location-input" id="currentLocation" value="خانه، خیابان شریعتی، پلاک ۷۸۹">
+        </div>
+
+        <!-- Add Meeting Button -->
+        <div class="section-header">
+            <h2>جلسات آینده</h2>
+            <button class="btn btn-primary" id="addMeetingBtn">
+                <i class="fas fa-plus ml-2"></i>
+                جلسه جدید
+            </button>
+        </div>
+
+        <!-- Add Meeting Form (Initially Hidden) -->
+        <div class="add-meeting-form" id="addMeetingForm" style="display: none;">
+            <h3 class="form-title">
+                <i class="fas fa-plus ml-2" style="color: #4f46e5;"></i>
+                ایجاد جلسه جدید
+            </h3>
+            <div class="space-y-4">
+                <input type="text" class="form-input form-full" id="meetingTitle" placeholder="عنوان جلسه">
+                
+                <input type="text" class="form-input form-full" id="meetingLocation" placeholder="آدرس محل جلسه">
+                
+                <div class="form-grid">
+                    <input type="date" class="form-input" id="meetingDate">
+                    <input type="time" class="form-input" id="meetingTime">
+                </div>
+                
+                <div class="form-grid">
+                    <div>
+                        <label class="form-label">مدت زمان (دقیقه)</label>
+                        <input type="number" class="form-input" id="meetingDuration" value="30">
+                    </div>
+                    <div>
+                        <label class="form-label">اعلان قبل از (دقیقه)</label>
+                        <input type="number" class="form-input" id="meetingNotifyBefore" value="30">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="form-label">رنگ جلسه</label>
+                    <div class="color-options">
+                        <button class="color-option color-blue-bg selected" data-color="blue"></button>
+                        <button class="color-option color-purple-bg" data-color="purple"></button>
+                        <button class="color-option color-green-bg" data-color="green"></button>
+                        <button class="color-option color-red-bg" data-color="red"></button>
+                        <button class="color-option color-orange-bg" data-color="orange"></button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="saveMeetingBtn">ذخیره جلسه</button>
+                    <button class="btn btn-secondary" id="cancelMeetingBtn">انصراف</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meetings List -->
+        <div id="meetingsList">
+            <!-- Meeting cards will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Calendar Sync Panel (Initially Hidden) -->
+    <div class="calendar-sync-overlay" id="calendarSyncPanel" style="display: none;">
+        <div class="calendar-sync-panel">
+            <div class="calendar-sync-header">
+                <div class="calendar-sync-title">
+                    <i class="fas fa-calendar-alt ml-2"></i>
+                    <span>تنظیمات تقویم Google</span>
+                </div>
+            </div>
+            
+            <div class="calendar-sync-body">
+                <div class="calendar-sync-status">
+                    <div>
+                        <div class="font-bold">همگام‌سازی تقویم</div>
+                        <div class="text-sm text-gray-600">اتصال خودکار جلسات از تقویم Google</div>
+                    </div>
+                    <div class="sync-toggle active" id="syncToggle">
+                        <div class="sync-toggle-handle"></div>
+                    </div>
+                </div>
+                
+                <div class="calendar-sync-options">
+                    <div class="sync-option selected" id="syncOptionAuto">
+                        <div class="sync-option-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="sync-option-info">
+                            <div class="sync-option-title">همگام‌سازی خودکار</div>
+                            <div class="sync-option-desc">جلسات جدید به طور خودکار اضافه می‌شوند</div>
+                        </div>
+                        <div class="sync-option-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="sync-option" id="syncOptionManual">
+                        <div class="sync-option-icon">
+                            <i class="fas fa-hand-pointer"></i>
+                        </div>
+                        <div class="sync-option-info">
+                            <div class="sync-option-title">همگام‌سازی دستی</div>
+                            <div class="sync-option-desc">فقط جلسات تأیید شده اضافه می‌شوند</div>
+                        </div>
+                        <div class="sync-option-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="sync-option" id="syncOptionOff">
+                        <div class="sync-option-icon">
+                            <i class="fas fa-ban"></i>
+                        </div>
+                        <div class="sync-option-info">
+                            <div class="sync-option-title">بدون همگام‌سازی</div>
+                            <div class="sync-option-desc">جلسات فقط به صورت دستی اضافه می‌شوند</div>
+                        </div>
+                        <div class="sync-option-check">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calendar-sync-actions">
+                    <button class="btn btn-primary" id="saveSyncSettings">ذخیره تنظیمات</button>
+                    <button class="btn btn-secondary" id="cancelSyncSettings">انصراف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Panel (Initially Hidden) -->
+    <div class="notifications-overlay" id="notificationsPanel" style="display: none;">
+        <div class="notifications-panel">
+            <div class="notifications-header">
+                <div class="notifications-title">
+                    <i class="fas fa-bell ml-2"></i>
+                    <span>اعلان‌ها</span>
+                    <span class="badge mr-2" id="panelBadge">2</span>
+                </div>
+                <button class="close-btn" id="closeNotificationsBtn">
+                    <i class="fas fa-times fa-lg"></i>
+                </button>
+            </div>
+            
+            <div class="notifications-list" id="notificationsList">
+                <!-- Notifications will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Sync Indicator (Initially Hidden) -->
+    <div class="sync-indicator" id="syncIndicator" style="display: none;">
+        <i class="fas fa-sync-alt"></i>
+        <span id="syncMessage">همگام‌سازی انجام شد</span>
+    </div>
+
+    <script>
+        // Initial Data
+        const meetings = [
+            {
+                id: 1,
+                title: "جلسه تیم صبحگاهی",
+                location: "دفتر مرکزی، خیابان ولیعصر، پلاک ۱۲۳",
+                time: "09:00",
+                date: "2026-01-08",
+                duration: 30,
+                notifyBefore: 45,
+                color: "blue"
+            },
+            {
+                id: 2,
+                title: "ارائه به مشتری",
+                location: "مجتمع تجاری، میدان ونک، طبقه ۵",
+                time: "14:00",
+                date: "2026-01-08",
+                duration: 60,
+                notifyBefore: 60,
+                color: "purple"
+            },
+            {
+                id: 3,
+                title: "جلسه برنامه‌ریزی پروژه",
+                location: "کافه نوآوری، اقدسیه",
+                time: "16:30",
+                date: "2026-01-09",
+                duration: 90,
+                notifyBefore: 45,
+                color: "green"
+            }
+        ];
+
+        const notifications = [
+            {
+                id: 1,
+                type: "departure",
+                title: "زمان حرکت برای جلسه تیم صبحگاهی",
+                message: "۴۵ دقیقه دیگر باید حرکت کنید",
+                time: "08:15",
+                read: false,
+                priority: "high"
+            },
+            {
+                id: 2,
+                type: "traffic",
+                title: "هشدار ترافیک",
+                message: "ترافیک سنگین در مسیر شما - ۱۵ دقیقه زودتر حرکت کنید",
+                time: "08:00",
+                read: false,
+                priority: "urgent"
+            }
+        ];
+
+        // Color mapping
+        const colors = {
+            blue: { name: 'آبی', bg: 'color-blue-bg', light: 'color-blue-light', border: 'color-blue' },
+            purple: { name: 'بنفش', bg: 'color-purple-bg', light: 'color-purple-light', border: 'color-purple' },
+            green: { name: 'سبز', bg: 'color-green-bg', light: 'color-green-light', border: 'color-green' },
+            red: { name: 'قرمز', bg: 'color-red-bg', light: 'color-red-light', border: 'color-red' },
+            orange: { name: 'نارنجی', bg: 'color-orange-bg', light: 'color-orange-light', border: 'color-orange' }
+        };
+
+        // State variables
+        let showAddMeeting = false;
+        let showNotifications = false;
+        let showCalendarSync = false;
+        let currentLocation = "خانه، خیابان شریعتی، پلاک ۷۸۹";
+        let newMeeting = {
+            title: '',
+            location: '',
+            time: '',
+            date: '',
+            duration: 30,
+            notifyBefore: 30,
+            color: 'blue'
+        };
+        
+        // Calendar state
+        let calendarConnected = true;
+        let syncMode = "auto"; // auto, manual, off
+        let lastSyncDate = "آخرین همگام‌سازی: هم‌اکنون";
+
+        // DOM Elements
+        const meetingsList = document.getElementById('meetingsList');
+        const notificationsList = document.getElementById('notificationsList');
+        const addMeetingForm = document.getElementById('addMeetingForm');
+        const notificationsPanel = document.getElementById('notificationsPanel');
+        const notificationBadge = document.getElementById('notificationBadge');
+        const panelBadge = document.getElementById('panelBadge');
+        const calendarWidget = document.getElementById('calendarWidget');
+        const calendarIcon = document.getElementById('calendarIcon');
+        const calendarDay = document.getElementById('calendarDay');
+        const calendarStatus = document.getElementById('calendarStatus');
+        const calendarSyncPanel = document.getElementById('calendarSyncPanel');
+        const syncToggle = document.getElementById('syncToggle');
+        const syncIndicator = document.getElementById('syncIndicator');
+        const syncMessage = document.getElementById('syncMessage');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            const today = new Date();
+            calendarDay.textContent = today.getDate();
+            
+            renderMeetings();
+            renderNotifications();
+            updateBadge();
+            updateCalendarWidget();
+            
+            // Event Listeners
+            document.getElementById('notificationBtn').addEventListener('click', function() {
+                showNotificationsPanel();
+            });
+            
+            document.getElementById('closeNotificationsBtn').addEventListener('click', function() {
+                hideNotificationsPanel();
+            });
+            
+            document.getElementById('addMeetingBtn').addEventListener('click', function() {
+                toggleAddMeetingForm();
+            });
+            
+            document.getElementById('cancelMeetingBtn').addEventListener('click', function() {
+                hideAddMeetingForm();
+            });
+            
+            document.getElementById('saveMeetingBtn').addEventListener('click', function() {
+                addNewMeeting();
+            });
+            
+            document.getElementById('currentLocation').addEventListener('input', function(e) {
+                currentLocation = e.target.value;
+            });
+            
+            // Color selection
+            document.querySelectorAll('.color-option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.color-option').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    newMeeting.color = this.dataset.color;
+                });
+            });
+            
+            // Form inputs
+            document.getElementById('meetingTitle').addEventListener('input', function(e) {
+                newMeeting.title = e.target.value;
+            });
+            
+            document.getElementById('meetingLocation').addEventListener('input', function(e) {
+                newMeeting.location = e.target.value;
+            });
+            
+            document.getElementById('meetingDate').addEventListener('input', function(e) {
+                newMeeting.date = e.target.value;
+            });
+            
+            document.getElementById('meetingTime').addEventListener('input', function(e) {
+                newMeeting.time = e.target.value;
+            });
+            
+            document.getElementById('meetingDuration').addEventListener('input', function(e) {
+                newMeeting.duration = parseInt(e.target.value) || 30;
+            });
+            
+            document.getElementById('meetingNotifyBefore').addEventListener('input', function(e) {
+                newMeeting.notifyBefore = parseInt(e.target.value) || 30;
+            });
+            
+            // Close notifications panel when clicking outside
+            notificationsPanel.addEventListener('click', function(e) {
+                if (e.target === notificationsPanel) {
+                    hideNotificationsPanel();
+                }
+            });
+            
+            // Calendar widget click
+            calendarWidget.addEventListener('click', function() {
+                showCalendarSyncPanel();
+            });
+            
+            // Calendar sync panel
+            document.getElementById('saveSyncSettings').addEventListener('click', function() {
+                saveSyncSettings();
+            });
+            
+            document.getElementById('cancelSyncSettings').addEventListener('click', function() {
+                hideCalendarSyncPanel();
+            });
+            
+            // Sync toggle
+            syncToggle.addEventListener('click', function() {
+                toggleSync();
+            });
+            
+            // Sync options
+            document.querySelectorAll('.sync-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.sync-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    
+                    if (this.id === 'syncOptionAuto') {
+                        syncMode = "auto";
+                        syncToggle.classList.add('active');
+                    } else if (this.id === 'syncOptionManual') {
+                        syncMode = "manual";
+                        syncToggle.classList.add('active');
+                    } else {
+                        syncMode = "off";
+                        syncToggle.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Close calendar sync panel when clicking outside
+            calendarSyncPanel.addEventListener('click', function(e) {
+                if (e.target === calendarSyncPanel) {
+                    hideCalendarSyncPanel();
+                }
+            });
+        });
+
+        // Render Functions
+        function renderMeetings() {
+            meetingsList.innerHTML = '';
+            
+            meetings.forEach(meeting => {
+                const meetingCard = createMeetingCard(meeting);
+                meetingsList.appendChild(meetingCard);
+            });
+        }
+
+        function renderNotifications() {
+            notificationsList.innerHTML = '';
+            
+            if (notifications.length === 0) {
+                notificationsList.innerHTML = `
+                    <div class="notification-empty">
+                        <i class="fas fa-bell fa-3x mb-3" style="opacity: 0.3;"></i>
+                        <p>اعلانی وجود ندارد</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            notifications.forEach(notification => {
+                const notificationItem = createNotificationItem(notification);
+                notificationsList.appendChild(notificationItem);
+            });
+        }
+
+        function createMeetingCard(meeting) {
+            const card = document.createElement('div');
+            card.className = `meeting-card ${colors[meeting.color].border}`;
+            card.dataset.id = meeting.id;
+            
+            const departure = calculateDepartureTime(meeting);
+            const colorClass = colors[meeting.color];
+            
+            // Format date
+            const meetingDate = new Date(meeting.date);
+            const today = new Date();
+            const isToday = meetingDate.toDateString() === today.toDateString();
+            const isTomorrow = meetingDate.toDateString() === new Date(today.getTime() + 86400000).toDateString();
+            
+            let dateText = '';
+            if (isToday) {
+                dateText = 'امروز';
+            } else if (isTomorrow) {
+                dateText = 'فردا';
+            } else {
+                // Persian month names
+                const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+                dateText = `${meetingDate.getDate()} ${persianMonths[meetingDate.getMonth()]}`;
+            }
+            
+            card.innerHTML = `
+                <div class="meeting-header">
+                    <div class="flex-1">
+                        <h3 class="meeting-title">${meeting.title}</h3>
+                        <div class="meeting-time">
+                            <i class="far fa-clock ml-2"></i>
+                            <span class="font-medium">${meeting.time}</span>
+                            <span class="mx-2">•</span>
+                            <span>${meeting.duration} دقیقه</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <span class="text-xs ${colorClass.light} px-3 py-1 rounded-full font-medium">
+                            ${dateText}
+                        </span>
+                        <button class="delete-btn delete-meeting-btn" data-id="${meeting.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="meeting-location">
+                    <i class="fas fa-map-marker-alt ml-2 mt-0.5" style="color: #6b7280;"></i>
+                    <span>${meeting.location}</span>
+                </div>
+
+                <div class="departure-card">
+                    <div class="departure-header">
+                        <div class="departure-title">
+                            <i class="fas fa-car ml-2"></i>
+                            <span>حرکت در ساعت ${departure.time}</span>
+                        </div>
+                        <span class="duration-badge">${departure.route.duration} دقیقه</span>
+                    </div>
+                    <div class="departure-prediction">
+                        <i class="fas fa-chart-line ml-1 mt-0.5"></i>
+                        <span>${departure.route.prediction}</span>
+                    </div>
+                </div>
+
+                <button class="routes-toggle" data-id="${meeting.id}">
+                    <i class="fas fa-route ml-2"></i>
+                    <span class="toggle-text">مشاهده مسیرهای جایگزین</span>
+                </button>
+
+                <div class="routes-container" id="routes-${meeting.id}">
+                    <!-- Routes will be populated here -->
+                </div>
+            `;
+            
+            // Add event listeners for dynamic elements
+            card.querySelector('.delete-meeting-btn').addEventListener('click', function() {
+                deleteMeeting(meeting.id);
+            });
+            
+            card.querySelector('.routes-toggle').addEventListener('click', function() {
+                toggleRoutes(meeting.id, departure.allRoutes);
+            });
+            
+            return card;
+        }
+
+        function createNotificationItem(notification) {
+            const item = document.createElement('div');
+            
+            let priorityClass = '';
+            if (notification.priority === 'urgent') {
+                priorityClass = 'notification-urgent';
+            } else if (notification.priority === 'high') {
+                priorityClass = 'notification-high';
+            } else {
+                priorityClass = 'notification-normal';
+            }
+            
+            item.className = `notification-item ${priorityClass} ${notification.read ? 'notification-read' : ''}`;
+            item.dataset.id = notification.id;
+            
+            item.innerHTML = `
+                <div class="notification-header">
+                    <div class="notification-content">
+                        ${notification.priority === 'urgent' ? 
+                            '<i class="fas fa-exclamation-circle ml-2 mt-0.5" style="color: #ef4444;"></i>' : 
+                            '<i class="fas fa-bell ml-2 mt-0.5" style="color: #3b82f6;"></i>'
+                        }
+                        <div>
+                            <h4 class="notification-title">${notification.title}</h4>
+                            <p class="notification-message">${notification.message}</p>
+                        </div>
+                    </div>
+                    <button class="delete-btn delete-notification-btn" data-id="${notification.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="notification-footer">
+                    <span class="notification-time">${notification.time}</span>
+                    ${!notification.read ? `
+                        <button class="mark-read-btn" data-id="${notification.id}">
+                            <i class="fas fa-check-circle ml-1"></i>
+                            خوانده شد
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+            
+            // Add event listeners
+            item.querySelector('.delete-notification-btn').addEventListener('click', function() {
+                deleteNotification(notification.id);
+            });
+            
+            if (!notification.read) {
+                item.querySelector('.mark-read-btn').addEventListener('click', function() {
+                    markNotificationRead(notification.id);
+                });
+            }
+            
+            return item;
+        }
+
+        // Helper Functions
+        function calculateDepartureTime(meeting) {
+            const routes = getRouteSuggestions();
+            const fastestRoute = routes[0];
+            const bufferTime = 10;
+            const totalTime = fastestRoute.duration + bufferTime;
+            
+            // Simulate departure time calculation
+            const meetingTimeStr = meeting.time;
+            const [hours, minutes] = meetingTimeStr.split(':').map(Number);
+            
+            // Calculate departure time (subtract total time)
+            let departureHours = hours;
+            let departureMinutes = minutes - totalTime;
+            
+            while (departureMinutes < 0) {
+                departureHours -= 1;
+                departureMinutes += 60;
+            }
+            
+            const departureTime = `${departureHours.toString().padStart(2, '0')}:${departureMinutes.toString().padStart(2, '0')}`;
+            
+            return {
+                time: departureTime,
+                route: fastestRoute,
+                allRoutes: routes
+            };
+        }
+
+        function getRouteSuggestions() {
+            return [
+                {
+                    type: "سریع‌ترین",
+                    duration: 25,
+                    distance: "۱۲.۵ کیلومتر",
+                    traffic: "متوسط",
+                    prediction: "بر اساس سفرهای قبلی شما در چهارشنبه ساعت ۸:۱۵"
+                },
+                {
+                    type: "کوتاه‌ترین",
+                    duration: 30,
+                    distance: "۱۰.۲ کیلومتر",
+                    traffic: "کم",
+                    prediction: "معمولاً ۵ دقیقه سریعتر در این ساعت"
+                },
+                {
+                    type: "جایگزین",
+                    duration: 28,
+                    distance: "۱۳.۱ کیلومتر",
+                    traffic: "کم",
+                    prediction: "از ترافیک خیابان ولیعصر دوری می‌کند"
+                }
+            ];
+        }
+
+        function toggleRoutes(meetingId, routes) {
+            const routesContainer = document.getElementById(`routes-${meetingId}`);
+            const toggleBtn = document.querySelector(`.routes-toggle[data-id="${meetingId}"]`);
+            const toggleText = toggleBtn.querySelector('.toggle-text');
+            
+            if (routesContainer.classList.contains('show')) {
+                routesContainer.classList.remove('show');
+                toggleText.textContent = 'مشاهده مسیرهای جایگزین';
+            } else {
+                // Populate routes
+                routesContainer.innerHTML = '';
+                routes.forEach((route, idx) => {
+                    let trafficColor = '';
+                    if (route.traffic === 'کم') {
+                        trafficColor = '#10b981';
+                    } else if (route.traffic === 'متوسط') {
+                        trafficColor = '#f59e0b';
+                    } else {
+                        trafficColor = '#ef4444';
+                    }
+                    
+                    const routeCard = document.createElement('div');
+                    routeCard.className = 'route-card';
+                    routeCard.innerHTML = `
+                        <div class="route-header">
+                            <span class="route-type">${route.type}</span>
+                            <span class="route-details">${route.duration} دقیقه • ${route.distance}</span>
+                        </div>
+                        <div class="route-traffic">
+                            <span class="traffic-dot" style="background-color: ${trafficColor};"></span>
+                            ${route.prediction}
+                        </div>
+                    `;
+                    routesContainer.appendChild(routeCard);
+                });
+                
+                routesContainer.classList.add('show');
+                toggleText.textContent = 'مخفی کردن';
+            }
+        }
+        
+        // Calendar Functions
+        function updateCalendarWidget() {
+            if (calendarConnected) {
+                calendarWidget.classList.remove('disconnected');
+                calendarWidget.classList.add('connected');
+                calendarStatus.innerHTML = '<i class="fas fa-check-circle"></i><span>متصل شد</span>';
+                calendarStatus.className = 'calendar-status connected';
+                calendarIcon.style.color = '#10b981';
+            } else {
+                calendarWidget.classList.remove('connected');
+                calendarWidget.classList.add('disconnected');
+                calendarStatus.innerHTML = '<i class="fas fa-times-circle"></i><span>قطع شد</span>';
+                calendarStatus.className = 'calendar-status disconnected';
+                calendarIcon.style.color = '#ef4444';
+            }
+        }
+        
+        function showCalendarSyncPanel() {
+            calendarSyncPanel.style.display = 'flex';
+            showCalendarSync = true;
+            
+            // Set current sync mode
+            document.querySelectorAll('.sync-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            if (syncMode === "auto") {
+                document.getElementById('syncOptionAuto').classList.add('selected');
+                syncToggle.classList.add('active');
+            } else if (syncMode === "manual") {
+                document.getElementById('syncOptionManual').classList.add('selected');
+                syncToggle.classList.add('active');
+            } else {
+                document.getElementById('syncOptionOff').classList.add('selected');
+                syncToggle.classList.remove('active');
+            }
+        }
+        
+        function hideCalendarSyncPanel() {
+            calendarSyncPanel.style.display = 'none';
+            showCalendarSync = false;
+        }
+        
+        function toggleSync() {
+            syncToggle.classList.toggle('active');
+            
+            if (!syncToggle.classList.contains('active')) {
+                document.getElementById('syncOptionOff').click();
+            } else if (syncMode === "off") {
+                document.getElementById('syncOptionAuto').click();
+            }
+        }
+        
+        function saveSyncSettings() {
+            // Simulate saving settings
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+            lastSyncDate = `آخرین همگام‌سازی: ${timeStr}`;
+            
+            // Show sync indicator
+            showSyncIndicator("در حال همگام‌سازی...", true);
+            
+            // Simulate API call
+            setTimeout(() => {
+                if (syncMode === "off") {
+                    calendarConnected = false;
+                } else {
+                    calendarConnected = true;
+                }
+                
+                updateCalendarWidget();
+                showSyncIndicator("همگام‌سازی انجام شد", false);
+                
+                // Hide sync panel
+                hideCalendarSyncPanel();
+                
+                // Add notification
+                notifications.unshift({
+                    id: Date.now(),
+                    type: "calendar",
+                    title: "تنظیمات تقویم بروزرسانی شد",
+                    message: `حالت همگام‌سازی: ${syncMode === "auto" ? "خودکار" : syncMode === "manual" ? "دستی" : "غیرفعال"}`,
+                    time: timeStr,
+                    read: false,
+                    priority: "normal"
+                });
+                
+                renderNotifications();
+                updateBadge();
+                
+            }, 1500);
+        }
+        
+        function showSyncIndicator(message, isSyncing) {
+            syncMessage.textContent = message;
+            syncIndicator.style.display = 'flex';
+            
+            if (isSyncing) {
+                syncIndicator.classList.add('syncing');
+            } else {
+                syncIndicator.classList.remove('syncing');
+                
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    syncIndicator.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // UI Functions
+        function showNotificationsPanel() {
+            notificationsPanel.style.display = 'flex';
+            showNotifications = true;
+        }
+
+        function hideNotificationsPanel() {
+            notificationsPanel.style.display = 'none';
+            showNotifications = false;
+        }
+
+        function toggleAddMeetingForm() {
+            if (showAddMeeting) {
+                addMeetingForm.style.display = 'none';
+                showAddMeeting = false;
+            } else {
+                addMeetingForm.style.display = 'block';
+                showAddMeeting = true;
+                // Reset form
+                resetForm();
+            }
+        }
+
+        function hideAddMeetingForm() {
+            addMeetingForm.style.display = 'none';
+            showAddMeeting = false;
+        }
+
+        function resetForm() {
+            newMeeting = {
+                title: '',
+                location: '',
+                time: '',
+                date: '',
+                duration: 30,
+                notifyBefore: 30,
+                color: 'blue'
+            };
+            
+            document.getElementById('meetingTitle').value = '';
+            document.getElementById('meetingLocation').value = '';
+            document.getElementById('meetingDate').value = '';
+            document.getElementById('meetingTime').value = '';
+            document.getElementById('meetingDuration').value = 30;
+            document.getElementById('meetingNotifyBefore').value = 30;
+            
+            // Reset color selection
+            document.querySelectorAll('.color-option').forEach(btn => {
+                btn.classList.remove('selected');
+                if (btn.dataset.color === 'blue') {
+                    btn.classList.add('selected');
+                }
+            });
+        }
+
+        function updateBadge() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            notificationBadge.textContent = unreadCount > 0 ? unreadCount : '';
+            panelBadge.textContent = unreadCount > 0 ? unreadCount : '';
+            
+            if (unreadCount > 0) {
+                notificationBadge.style.display = 'flex';
+                panelBadge.style.display = 'flex';
+            } else {
+                notificationBadge.style.display = 'none';
+                panelBadge.style.display = 'none';
+            }
+        }
+
+        // Data Functions
+        function addNewMeeting() {
+            if (!newMeeting.title || !newMeeting.location || !newMeeting.time || !newMeeting.date) {
+                alert('لطفا تمام فیلدهای ضروری را پر کنید');
+                return;
+            }
+            
+            const newMeetingWithId = {
+                ...newMeeting,
+                id: Date.now()
+            };
+            
+            meetings.push(newMeetingWithId);
+            renderMeetings();
+            hideAddMeetingForm();
+            
+            // Add a notification for the new meeting
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+            
+            notifications.unshift({
+                id: Date.now() + 1,
+                type: "info",
+                title: "جلسه جدید اضافه شد",
+                message: `جلسه "${newMeeting.title}" با موفقیت اضافه شد`,
+                time: timeStr,
+                read: false,
+                priority: "normal"
+            });
+            
+            renderNotifications();
+            updateBadge();
+        }
+
+        function deleteMeeting(id) {
+            const index = meetings.findIndex(m => m.id === id);
+            if (index !== -1) {
+                meetings.splice(index, 1);
+                renderMeetings();
+            }
+        }
+
+        function deleteNotification(id) {
+            const index = notifications.findIndex(n => n.id === id);
+            if (index !== -1) {
+                notifications.splice(index, 1);
+                renderNotifications();
+                updateBadge();
+            }
+        }
+
+        function markNotificationRead(id) {
+            const notification = notifications.find(n => n.id === id);
+            if (notification) {
+                notification.read = true;
+                renderNotifications();
+                updateBadge();
+            }
+        }
+    </script>
+</body>
+</html>
